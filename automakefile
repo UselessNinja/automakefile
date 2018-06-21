@@ -1,0 +1,149 @@
+##
+## EPITECH PROJECT, 2018
+## undefined
+## File description:
+## automakefile
+##
+
+#!/bin/sh
+
+if [ ! -z $2 ]
+then
+	exit 84
+fi
+folder=$1
+if [ ! -f $folder ]
+then
+	exit 84
+else
+	IFS=";"
+	count=0
+	while read line
+		do
+			array=($line)
+		if [[ ${array[0]} == "PROJECT_DIR" ]]
+		then
+			project_directory=${array[1]}
+		elif [[ ${array[0]} == "SOURCES_DIR" ]]
+		then
+			sources_directory=${array[1]}
+		elif [[ ${array[0]} == "HEADERS_DIR" ]]
+		then
+			headers_directory=${array[1]}
+		elif [[ ${array[0]} == "LIBS_DIR" ]]
+		then
+			library_directory=${array[1]}
+		elif [[ ${array[0]} == "EXEC" ]]
+		then
+			binary_name=${array[1]}
+		elif [[ ${array[0]} == "CC" ]]
+		then
+			compilation=${array[1]}
+		elif [[ ${array[0]} == "CFLAGS" ]]
+		then
+			compilation_flags=${array[1]}
+		elif [[ ${array[0]} == "LDFLAGS" ]]
+		then
+			linking_flags=${array[1]}
+		elif [[ ${array[0]} == "BCK_DIR" ]]
+		then
+			backup_folder=${array[1]}
+		elif [[ ${array[0]} == "ZIP" ]]
+		then
+			compression_binary=${array[1]}
+		elif [[ ${array[0]} == "ZIPFLAGS" ]]
+		then
+			compression_flags=${array[1]}
+		elif [[ ${array[0]} == "UNZIP" ]]
+		then
+			decompression_binary=${array[1]}
+		elif [[ ${array[0]} == "UNZIPFLAGS" ]]
+		then
+			decompression_flags=${array[1]}
+		elif [[ ${array[0]} == *.c ]]
+		then
+			sources[count]=${array[0]}
+			((count++))
+		fi
+	done < $folder
+	if [ -z $project_directory ]
+	then
+		exit 84
+	fi
+	if [ ! -d "$project_directory/$backup_folder" ]
+	then
+		mkdir -p $project_directory/$backup_folder
+		touch $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+		rm -f $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+	fi
+	echo 1_0 > $project_directory/.version
+	cat /dev/null > $project_directory/Makefile
+	echo >> $project_directory/Makefile
+	echo -e "##  █████╗ ██╗   ██╗████████╗ ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗███████╗███████╗██╗██╗     ███████╗" >> $project_directory/Makefile
+	echo -e "## ██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗████╗ ████║██╔══██╗██║ ██╔╝██╔════╝██╔════╝██║██║     ██╔════╝" >> $project_directory/Makefile
+	echo -e "## ███████║██║   ██║   ██║   ██║   ██║██╔████╔██║███████║█████╔╝ █████╗  █████╗  ██║██║     █████╗  " >> $project_directory/Makefile
+	echo -e "## ██╔══██║██║   ██║   ██║   ██║   ██║██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝  ██╔══╝  ██║██║     ██╔══╝  " >> $project_directory/Makefile
+	echo -e "## ██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗██║     ██║███████╗███████╗" >> $project_directory/Makefile
+	echo -e "## ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝╚══════╝" >> $project_directory/Makefile
+	echo >> $project_directory/Makefile
+	echo -e "NAME= $binary_name" >> $project_directory/Makefile
+	echo -e "CC= $compilation" >> $project_directory/Makefile
+	i=0
+	for ((i = 0; count - $i; i++))
+	do
+		if [ $i == 0 ]
+		then
+			echo -e "SRC= $sources_directory/${sources[$i]} \\" >> $project_directory/Makefile
+			touch $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+			rm -f $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+		else
+			echo -e "\t$sources_directory/${sources[$i]} \\" >> $project_directory/Makefile
+			touch $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+			rm -f $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+		fi
+	done
+	echo >> $project_directory/Makefile
+	echo -e "OBJ= \$(SRC:.c=.o)" >> $project_directory/Makefile
+	echo -e "CFLAGS= $compilation_flags" >> $project_directory/Makefile
+	echo -e "LDFLAGS= $linking_flags" >> $project_directory/Makefile
+	echo -e "RM= rm -f" >> $project_directory/Makefile
+	echo -e "all: \$(NAME)" >> $project_directory/Makefile
+	echo -e "\$(NAME): \$(OBJ)" >> $project_directory/Makefile
+	if [ ! -z $library_directory ]
+	then
+		echo -e "\t\$(MAKE) -C $library_directory" >> $project_directory/Makefile
+		touch $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+		rm -f $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+	fi
+	echo -e "\t\$(CC) -o \$(NAME) \$(OBJ) \$(CFLAGS) \$(LDFLAGS)" >> $project_directory/Makefile
+	echo -e "clean:" >> $project_directory/Makefile
+	echo -e "\t\$(RM) \$(OBJ)" >> $project_directory/Makefile
+	if [ ! -z $library_directory ]
+	then
+		echo -e "\t\$(MAKE) -C $library_directory clean" >> $project_directory/Makefile
+		touch $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+		rm -f $project_directory/.tempfile.uselessninja.notfake.onehundredpercentlegit.thisislong.butwhocaresbecauseitsafilenameofa.tempfile
+	fi
+	echo -e "fclean: clean" >> $project_directory/Makefile
+	echo -e "\t\$(RM) \$(NAME)" >> $project_directory/Makefile
+	if [ ! -z $library_directory ]
+	then
+		echo -e "\t\$(MAKE) -C $library_directory fclean" >> $project_directory/Makefile
+	fi
+	echo -e "\t\$(RM) vgcore.*" >> $project_directory/Makefile
+	echo -e "re: fclean all" >> $project_directory/Makefile
+	version=$(<$project_directory/.version)
+	echo -e "archive:\n\t$compression_binary $compression_flags ./$backup_folder/backup_$version.$compression_binary \$(SRC)\n\techo \"./$backup_folder/backup_$version.$compression_binary file generated.\"" >> $project_directory/Makefile
+	echo -e "revert:\n\t$decompression_binary $decompression_flags ./$backup_folder/backup_$version.$compression_binary" >> $project_directory/Makefile
+	echo -e "num:\n\t@echo \"$version\"" >> $project_directory/Makefile
+	echo -e "delete:\n\t\$(RM) ./$backup_folder/backup_$version.$compression_binary" >> $project_directory/Makefile
+	echo -e ".PHONY: all clean fclean re archive revert num delete" >> $project_directory/Makefile
+	echo >> $project_directory/Makefile
+	echo -e "##  █████╗ ██╗   ██╗████████╗ ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗███████╗███████╗██╗██╗     ███████╗" >> $project_directory/Makefile
+	echo -e "## ██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗████╗ ████║██╔══██╗██║ ██╔╝██╔════╝██╔════╝██║██║     ██╔════╝" >> $project_directory/Makefile
+	echo -e "## ███████║██║   ██║   ██║   ██║   ██║██╔████╔██║███████║█████╔╝ █████╗  █████╗  ██║██║     █████╗  " >> $project_directory/Makefile
+	echo -e "## ██╔══██║██║   ██║   ██║   ██║   ██║██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝  ██╔══╝  ██║██║     ██╔══╝  " >> $project_directory/Makefile
+	echo -e "## ██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗██║     ██║███████╗███████╗" >> $project_directory/Makefile
+	echo -e "## ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝╚══════╝" >> $project_directory/Makefile
+fi
+exit 0
